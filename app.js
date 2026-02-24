@@ -87,11 +87,35 @@ function populateSelect(select, options, selectedValue, isString = false) {
   });
 }
 
+function setStatus(message, mode = 'info') {
+  const statusEl = document.getElementById('statusMessage');
+  if (!statusEl) return;
+  statusEl.textContent = message;
+  statusEl.className = 'mb-4 text-sm rounded-xl px-3 py-2';
+  if (mode === 'success') {
+    statusEl.classList.add('bg-emerald-50', 'text-emerald-700', 'dark:bg-emerald-900/30', 'dark:text-emerald-200');
+  } else if (mode === 'error') {
+    statusEl.classList.add('bg-red-50', 'text-red-700', 'dark:bg-red-900/30', 'dark:text-red-200');
+  } else {
+    statusEl.classList.add('bg-brand-50', 'text-brand-700', 'dark:bg-brand-500/20', 'dark:text-brand-100');
+  }
+}
+
+function setBusy(isBusy) {
+  ['flipButton', 'learnedButton', 'difficultButton', 'resetButton'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.disabled = isBusy;
+  });
+}
+
 async function initLearnPage() {
   const flashcard = document.getElementById('flashcard');
   if (!flashcard) return;
 
   const profileId = getProfileId();
+  const profileBadge = document.getElementById('profileBadge');
+  if (profileBadge) profileBadge.textContent = `ID Belajar: ${profileId}`;
+
   const date = todayKey();
   const prefs = loadPrefs();
 
@@ -102,7 +126,7 @@ async function initLearnPage() {
     languages = meta.languages;
     categories = meta.categories;
   } catch {
-    console.warn('Backend API tidak tersedia.');
+    setStatus('Backend tidak tersambung. Jalankan server dengan `npm start`.', 'error');
   }
 
   const nativeLanguageSelect = document.getElementById('nativeLanguage');
@@ -129,6 +153,8 @@ async function initLearnPage() {
   let index = 0;
 
   async function loadCards() {
+    setBusy(true);
+    setStatus('Memuat kartu harian...', 'info');
     const query = new URLSearchParams({
       profileId,
       date,
@@ -138,13 +164,20 @@ async function initLearnPage() {
       undoneOnly: String(undoneOnlyCheckbox.checked)
     });
 
-    const result = await apiGet(`/api/cards?${query.toString()}`);
-    cards = result.cards;
-    totalAllCards = result.totalAllCards;
-    learnedToday = result.learnedToday;
-    index = 0;
-    renderCard();
-    updateProgress();
+    try {
+      const result = await apiGet(`/api/cards?${query.toString()}`);
+      cards = result.cards;
+      totalAllCards = result.totalAllCards;
+      learnedToday = result.learnedToday;
+      index = 0;
+      renderCard();
+      updateProgress();
+      setStatus('Kartu siap dipelajari. Klik Balik Kartu untuk melihat terjemahan.', 'success');
+    } catch {
+      setStatus('Gagal memuat kartu. Cek koneksi backend.', 'error');
+    } finally {
+      setBusy(false);
+    }
   }
 
   function updateProgress() {
@@ -175,6 +208,20 @@ async function initLearnPage() {
   async function mark(status) {
     if (!cards.length) return;
     const card = cards[index % cards.length];
+    setBusy(true);
+    try {
+      await apiPost('/api/progress/mark', { profileId, date, cardId: card.id, status });
+      if (status === 'learned') {
+        setStatus('Mantap! Kartu ditandai sudah dipelajari.', 'success');
+      } else {
+        setStatus('Kartu ditandai belum paham. Kamu bisa ulangi lagi nanti.', 'info');
+      }
+      flashcard.classList.remove('is-flipped');
+      await loadCards();
+    } catch {
+      setStatus('Gagal menyimpan progress.', 'error');
+      setBusy(false);
+    }
     await apiPost('/api/progress/mark', { profileId, date, cardId: card.id, status });
     if (status === 'learned') learnedToday += 1;
     flashcard.classList.remove('is-flipped');
@@ -185,8 +232,15 @@ async function initLearnPage() {
   document.getElementById('difficultButton').addEventListener('click', () => mark('difficult'));
   document.getElementById('flipButton').addEventListener('click', () => flashcard.classList.toggle('is-flipped'));
   document.getElementById('resetButton').addEventListener('click', async () => {
-    await apiPost('/api/progress/reset', { profileId });
-    await loadCards();
+    setBusy(true);
+    try {
+      await apiPost('/api/progress/reset', { profileId });
+      setStatus('Progress berhasil direset.', 'success');
+      await loadCards();
+    } catch {
+      setStatus('Gagal reset progress.', 'error');
+      setBusy(false);
+    }
   });
 
   [nativeLanguageSelect, targetLanguageSelect, categoryFilter, undoneOnlyCheckbox].forEach(element => {
@@ -207,6 +261,21 @@ async function initStatsPage() {
   const totalLearnedEl = document.getElementById('totalLearned');
   if (!totalLearnedEl) return;
 
+  try {
+    const profileId = getProfileId();
+    const stats = await apiGet(`/api/progress/${profileId}`);
+
+    totalLearnedEl.textContent = String(stats.totalLearned);
+    document.getElementById('completionRate').textContent = `${stats.completionRate}%`;
+    document.getElementById('streakCount').textContent = `${stats.streak} hari`;
+    document.getElementById('difficultCount').textContent = String(stats.difficultToday);
+
+    const todayPercent = stats.totalCards ? Math.round((stats.learnedToday / stats.totalCards) * 100) : 0;
+    document.getElementById('statsProgressBar').style.width = `${todayPercent}%`;
+    document.getElementById('statsProgressText').textContent = `${todayPercent}% selesai hari ini (${stats.learnedToday}/${stats.totalCards} kartu)`;
+  } catch {
+    document.getElementById('statsProgressText').textContent = 'Gagal memuat statistik. Pastikan backend berjalan.';
+  }
   const profileId = getProfileId();
   const stats = await apiGet(`/api/progress/${profileId}`);
 
