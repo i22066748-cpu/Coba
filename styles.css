@@ -1,0 +1,126 @@
+:root {
+  --card-radius: 1.5rem;
+}
+
+body {
+  background-image:
+    radial-gradient(circle at 10% 10%, rgba(59, 130, 246, 0.12), transparent 28%),
+    radial-gradient(circle at 90% 20%, rgba(14, 165, 233, 0.09), transparent 24%),
+    radial-gradient(circle at 60% 90%, rgba(37, 99, 235, 0.08), transparent 34%);
+}
+
+.dark body {
+  background-image:
+    radial-gradient(circle at 10% 10%, rgba(59, 130, 246, 0.08), transparent 24%),
+    radial-gradient(circle at 90% 20%, rgba(14, 165, 233, 0.07), transparent 20%),
+    radial-gradient(circle at 60% 90%, rgba(37, 99, 235, 0.08), transparent 30%);
+}
+
+.glass-panel {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(10px);
+}
+
+.dark .glass-panel {
+  background: rgba(15, 23, 42, 0.75);
+}
+
+.flashcard-wrapper {
+  perspective: 1200px;
+  width: min(100%, 760px);
+  min-height: 320px;
+}
+
+.flashcard-inner {
+  position: relative;
+  width: 100%;
+  min-height: 320px;
+  transform-style: preserve-3d;
+  transition: transform 0.65s cubic-bezier(0.4, 0.2, 0.2, 1);
+}
+
+.flashcard-wrapper.is-flipped .flashcard-inner {
+  transform: rotateY(180deg);
+}
+
+.flashcard-face {
+  position: absolute;
+  inset: 0;
+  border-radius: var(--card-radius);
+  border: 1px solid rgba(148, 163, 184, 0.28);
+  padding: 2rem;
+  background: linear-gradient(140deg, #ffffff 0%, #eff6ff 60%, #dbeafe 100%);
+  box-shadow: 0 16px 40px rgba(37, 99, 235, 0.15);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  backface-visibility: hidden;
+}
+
+.dark .flashcard-face {
+  background: linear-gradient(140deg, #0f172a 0%, #1e293b 60%, #1d4ed8 130%);
+  border-color: rgba(71, 85, 105, 0.5);
+}
+
+.flashcard-back {
+  transform: rotateY(180deg);
+}
+
+.switch {
+  position: relative;
+  width: 46px;
+  height: 26px;
+  border-radius: 999px;
+  background: #cbd5e1;
+  transition: all 0.2s ease;
+}
+
+.switch::after {
+  content: '';
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border-radius: 999px;
+  top: 3px;
+  left: 3px;
+  background: white;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+input:checked + .switch {
+  background: #2563eb;
+}
+
+input:checked + .switch::after {
+  left: 23px;
+}
+
+.action-btn {
+  transition: transform 0.16s ease, box-shadow 0.2s ease, filter 0.2s ease;
+}
+
+.action-btn:hover {
+  transform: translateY(-1px);
+}
+
+.action-btn:active {
+  transform: translateY(0);
+  filter: brightness(0.96);
+}
+
+.action-btn:disabled {
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.shimmer {
+  background: linear-gradient(90deg, rgba(148, 163, 184, 0.15), rgba(148, 163, 184, 0.35), rgba(148, 163, 184, 0.15));
+  background-size: 200% 100%;
+  animation: shimmer 1.4s infinite;
+}
+
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}

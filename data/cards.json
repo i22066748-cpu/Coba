@@ -1,0 +1,114 @@
+[
+  {
+    "id": "v1",
+    "category": "vocabulary",
+    "translations": {
+      "English": "Thank you",
+      "Indonesia": "Terima kasih",
+      "Japanese": "ありがとうございます",
+      "Korean": "감사합니다"
+    },
+    "examples": {
+      "Indonesia": "Digunakan untuk mengucapkan rasa terima kasih.",
+      "English": "Used to express gratitude politely."
+    }
+  },
+  {
+    "id": "v2",
+    "category": "vocabulary",
+    "translations": {
+      "English": "Hello",
+      "Indonesia": "Halo",
+      "Japanese": "こんにちは",
+      "Korean": "안녕하세요"
+    },
+    "examples": {
+      "Indonesia": "Sapaan umum saat memulai percakapan.",
+      "English": "A common greeting to start a conversation."
+    }
+  },
+  {
+    "id": "s1",
+    "category": "sentences",
+    "translations": {
+      "English": "How are you today?",
+      "Indonesia": "Apa kabar hari ini?",
+      "Japanese": "今日は元気ですか？",
+      "Korean": "오늘 어때요?"
+    },
+    "examples": {
+      "Indonesia": "Kalimat sederhana untuk membuka obrolan.",
+      "English": "Simple sentence to open a conversation."
+    }
+  },
+  {
+    "id": "s2",
+    "category": "sentences",
+    "translations": {
+      "English": "I am learning every day.",
+      "Indonesia": "Saya belajar setiap hari.",
+      "Japanese": "私は毎日勉強しています。",
+      "Korean": "저는 매일 공부해요."
+    },
+    "examples": {
+      "Indonesia": "Contoh kalimat tentang kebiasaan belajar.",
+      "English": "Sample sentence about a learning habit."
+    }
+  },
+  {
+    "id": "c1",
+    "category": "conversation",
+    "translations": {
+      "English": "Could you repeat that, please?",
+      "Indonesia": "Bisakah kamu mengulanginya?",
+      "Japanese": "もう一度言ってもらえますか？",
+      "Korean": "다시 말씀해 주시겠어요?"
+    },
+    "examples": {
+      "Indonesia": "Frasa penting saat belum paham lawan bicara.",
+      "English": "Useful phrase when you did not catch what was said."
+    }
+  },
+  {
+    "id": "c2",
+    "category": "conversation",
+    "translations": {
+      "English": "Where is the train station?",
+      "Indonesia": "Di mana stasiun kereta?",
+      "Japanese": "駅はどこですか？",
+      "Korean": "기차역이 어디에 있나요?"
+    },
+    "examples": {
+      "Indonesia": "Pertanyaan umum saat bepergian.",
+      "English": "Common question while traveling."
+    }
+  },
+  {
+    "id": "g1",
+    "category": "grammar",
+    "translations": {
+      "English": "Simple Present: Subject + Verb 1",
+      "Indonesia": "Present sederhana: Subjek + Kata kerja dasar",
+      "Japanese": "現在形：主語 + 動詞基本形",
+      "Korean": "현재형: 주어 + 동사 원형"
+    },
+    "examples": {
+      "Indonesia": "Dipakai untuk kebiasaan dan fakta umum.",
+      "English": "Used for habits and general facts."
+    }
+  },
+  {
+    "id": "g2",
+    "category": "grammar",
+    "translations": {
+      "English": "Japanese particles は / が",
+      "Indonesia": "Partikel Jepang は / が",
+      "Japanese": "助詞 は / が",
+      "Korean": "일본어 조사 は / が"
+    },
+    "examples": {
+      "Indonesia": "Dasar grammar Jepang untuk topik dan fokus kalimat.",
+      "English": "Basic Japanese grammar to differentiate topic and subject focus."
+    }
+  }
+]
