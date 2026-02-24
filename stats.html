@@ -32,6 +32,13 @@
       <div class="flex items-center gap-2">
         <a href="learn.html" class="px-4 py-2 rounded-xl text-sm border border-slate-300 dark:border-slate-700 hover:bg-white dark:hover:bg-slate-900">Belajar</a>
         <button id="themeToggle" class="px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-700 text-sm hover:bg-white dark:hover:bg-slate-900 transition">🌙/☀️</button>
+<body class="bg-slate-50 text-slate-800 dark:bg-slate-950 dark:text-slate-100 transition-colors duration-300">
+  <header class="border-b border-slate-200 dark:border-slate-800 bg-white/90 dark:bg-slate-950/80 backdrop-blur sticky top-0 z-30">
+    <nav class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
+      <a href="index.html" class="font-bold text-xl text-brand-600 dark:text-brand-100">Daily Language Card</a>
+      <div class="flex items-center gap-2">
+        <a href="learn.html" class="px-3 py-2 rounded-xl text-sm border border-slate-300 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-900">Belajar</a>
+        <button id="themeToggle" class="px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-700 text-sm hover:bg-slate-100 dark:hover:bg-slate-900 transition">🌙/☀️</button>
       </div>
     </nav>
   </header>
@@ -67,6 +74,34 @@
         </div>
         <p id="statsProgressText" class="mt-2 text-sm text-slate-500 dark:text-slate-400">0% selesai hari ini</p>
       </section>
+    <h1 class="text-3xl font-extrabold">Statistik Belajar</h1>
+    <p class="mt-2 text-slate-600 dark:text-slate-300">Pantau progres belajar bahasa Anda setiap hari.</p>
+
+    <section class="mt-8 grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <article class="rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-5">
+        <p class="text-sm text-slate-500 dark:text-slate-400">Total kartu dipelajari</p>
+        <p id="totalLearned" class="mt-2 text-3xl font-bold">0</p>
+      </article>
+      <article class="rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-5">
+        <p class="text-sm text-slate-500 dark:text-slate-400">Penyelesaian</p>
+        <p id="completionRate" class="mt-2 text-3xl font-bold">0%</p>
+      </article>
+      <article class="rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-5">
+        <p class="text-sm text-slate-500 dark:text-slate-400">Streak harian 🔥</p>
+        <p id="streakCount" class="mt-2 text-3xl font-bold">0 hari</p>
+      </article>
+      <article class="rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-5">
+        <p class="text-sm text-slate-500 dark:text-slate-400">Belum dipahami</p>
+        <p id="difficultCount" class="mt-2 text-3xl font-bold">0</p>
+      </article>
+    </section>
+
+    <section class="mt-8 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6">
+      <h2 class="font-bold text-xl mb-3">Progres Hari Ini</h2>
+      <div class="w-full bg-slate-200 dark:bg-slate-800 rounded-full h-3 overflow-hidden">
+        <div id="statsProgressBar" class="h-3 bg-brand-600 rounded-full transition-all" style="width: 0%"></div>
+      </div>
+      <p id="statsProgressText" class="mt-2 text-sm text-slate-500 dark:text-slate-400">0% selesai hari ini</p>
     </section>
   </main>
 
